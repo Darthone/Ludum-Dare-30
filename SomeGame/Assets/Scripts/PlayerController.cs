@@ -14,10 +14,14 @@ public class PlayerController : MonoBehaviour {
     public float maxSpeed = 1f;
     public float SPEEDCONSTANT = 20F;
     public float laserSpeed = 20f;
+
+    bool delayedShield = false;
     //float maxSpeed = 
     //float damping = 
 
-    int laserCount = 1;
+    public int laserCount = 1;
+    public int bombs = 1;
+    Rect cameraRect;
 
     IEnumerator delayShooting() {
         yield return new WaitForSeconds(shootSpeed);
@@ -27,6 +31,7 @@ public class PlayerController : MonoBehaviour {
     IEnumerator delayInvul(float delay) {
         yield return new WaitForSeconds(delay);
         canBeHurt = true;
+        delayedShield = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -34,10 +39,11 @@ public class PlayerController : MonoBehaviour {
             if (collision.gameObject.CompareTag("EnemyBullet")) {
                 GameController.control.lives -= 1;
                 laserCount = 1;
-                if (GameController.control.lives > 0) {
+                if (GameController.control.lives >= 0) {
                     Respawn();
                 } else {
                     GameController.control.GameOver();
+                    GameController.control.lives = 3;
                 }
 
                 //add to score, draw points on screen
@@ -47,6 +53,14 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        var bottomLeft = Camera.main.camera.ScreenToWorldPoint(Vector3.zero);
+        var topRight = Camera.main.camera.ScreenToWorldPoint(new Vector3(
+            Camera.main.camera.pixelWidth, Camera.main.camera.pixelHeight));
+        cameraRect = new Rect(
+            bottomLeft.x,
+            bottomLeft.y,
+            topRight.x - bottomLeft.x,
+            topRight.y - bottomLeft.y);
         //print(this.gameObject.layer);
         //this.gameObject.layer = 9;
         //print(this.gameObject.layer);
@@ -54,8 +68,12 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //face mouse
-        
+        //draw shield if invul TODO
+        if (!canBeHurt && !delayedShield) {
+            delayedShield = true;
+            StartCoroutine(delayInvul(3f));
+        }
+
         //fire
         if (Input.GetButton("Fire1") && canShoot) {
             Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
@@ -63,8 +81,7 @@ public class PlayerController : MonoBehaviour {
             float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
 
             GameObject laser = (GameObject)Instantiate(laserPrefab, (this.transform.position + (new Vector3(Mathf.Cos(Mathf.Deg2Rad * rot_z) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * rot_z) * 1.5f))), Quaternion.AngleAxis(rot_z, Vector3.forward));
-
-            laser.gameObject.layer = this.gameObject.layer;
+            laser.layer = this.gameObject.layer;
             laser.rigidbody2D.velocity = laser.transform.right * laserSpeed;
             canShoot = false;
             StartCoroutine(delayShooting());
@@ -89,6 +106,12 @@ public class PlayerController : MonoBehaviour {
 	}
 
     void FixedUpdate() {
+        //keep on screen
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, cameraRect.xMin, cameraRect.xMax),
+            Mathf.Clamp(transform.position.y, cameraRect.yMin, cameraRect.yMax),
+            0f);
+
         // face mouse
         Vector3 diff = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
         diff.Normalize();
@@ -112,7 +135,8 @@ public class PlayerController : MonoBehaviour {
         this.rigidbody2D.velocity = Vector2.zero;
         canBeHurt = false;
         StartCoroutine(delayInvul(3f)); // 3 second protected
-        // play some exploding particles
+        delayedShield = true;
+        // play some exploding particles TODO
     }
 
     
