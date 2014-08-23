@@ -13,7 +13,11 @@ public class Enemy : MonoBehaviour {
     int enemyState = 0;
     float maxStateDelay = 4f;
     int circle = 1;
+    SpriteRenderer sr;
+
     public int health = 1;
+
+    public Color currentColor = Color.grey;
 
     public GameObject[] Projectiles;
 
@@ -37,6 +41,7 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        sr = this.GetComponent<SpriteRenderer>();
         //play some cool animaiton on start
 	    // randomize starting stats
 	}
@@ -48,6 +53,9 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    void FixedUpdate() {
+        sr.color = currentColor;
+    }
 
 	// Update is called once per frame
 	void Update () {
