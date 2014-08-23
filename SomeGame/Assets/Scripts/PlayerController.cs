@@ -137,6 +137,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Respawn(){
+        StartCoroutine(GameController.control.Shake(0.5f, 3f));
         this.transform.position = Vector3.zero;
         this.rigidbody2D.velocity = Vector2.zero;
         canBeHurt = false;
