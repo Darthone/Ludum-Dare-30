@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     public bool canShoot = true;
     public bool canMove = true;
     public bool canBeHurt = true;
+    public AudioClip laserSound;
 
     public float shootSpeed = 0.25f;
     public float maxSpeed = 1f;
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviour {
 
         //fire
         if (Input.GetButton("Fire1") && canShoot) {
+            audio.PlayOneShot(laserSound);
             Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             diff.Normalize();
             float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
@@ -86,6 +88,10 @@ public class PlayerController : MonoBehaviour {
             canShoot = false;
             StartCoroutine(delayShooting());
             //laser count
+        }
+
+        if (Input.GetButtonDown("Fire2")){ // right click drop bombs
+
         }
 
         //switch between layers
