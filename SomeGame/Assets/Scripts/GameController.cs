@@ -7,7 +7,9 @@ public class GameController : MonoBehaviour {
     public GameObject player;
     public GameObject core;
     public int playerLayer = 8;
-    public Sprite[] guiImages;
+    public Texture2D[] guiLives;
+    public Texture2D[] guiLevel;
+    //public Texture2D[] guiLives;
 
     bool paused = false;
     public bool canPause = true;
@@ -18,7 +20,7 @@ public class GameController : MonoBehaviour {
 
     public long score = 0;
     public float multiplyer = 1.0f;
-    public int lives = 3;
+    public int lives = 5;
     public int level = 4;
 
     public float minSpawnTime = 1f;
@@ -93,7 +95,7 @@ public class GameController : MonoBehaviour {
                 paused = togglePause();
         } else {
             // lives - top left
-            
+            GUI.DrawTexture( new Rect(0f,0f,50f,30f), guiLives[lives]);
             //score - top right
             
             // layer - bottom left
