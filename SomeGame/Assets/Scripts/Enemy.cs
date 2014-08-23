@@ -42,10 +42,9 @@ public class Enemy : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D collision) {
-        print("hit");
         if (collision.gameObject.CompareTag("PlayerBullet")) {
-            print("health down");
             this.health -= 1;
+            //add to score, draw points on screen
         }
     }
 
@@ -53,7 +52,7 @@ public class Enemy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (this.health <=0)
-            Destroy(this);
+            Destroy(this.gameObject);
 
         if (this.gameObject.layer == player.gameObject.layer)
             target = player;
