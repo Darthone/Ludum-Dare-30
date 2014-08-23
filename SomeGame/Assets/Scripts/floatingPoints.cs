@@ -10,6 +10,7 @@ public class floatingPoints : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        scroll = Random.Range(0f, 0.2f);
         this.transform.position = Camera.main.camera.WorldToViewportPoint(this.transform.position);
         myGUItext = GetComponent<GUIText>();
 	    myGUItext.material.color = new Color(1f,1f,1f,0.5f);
