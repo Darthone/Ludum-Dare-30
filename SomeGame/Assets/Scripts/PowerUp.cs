@@ -21,8 +21,11 @@ public class PowerUp : MonoBehaviour {
 			AudioSource.PlayClipAtPoint(sound, transform.position);
 
             PlayerController pc = collision.GetComponent<PlayerController>();
-            GameController.control.score += (int)(points * GameController.control.multiplyer);
+            int addScore = (int)(points * GameController.control.multiplyer);
+            GameController.control.score += addScore;
             GameObject text = (GameObject)Instantiate(floatingText, this.transform.position, Quaternion.identity);
+            GameObject textPoints = (GameObject)Instantiate(floatingText, this.transform.position, Quaternion.identity);
+            textPoints.guiText.text = "+" + addScore.ToString();
             switch (thisType) {
                 case PowerUpType.Shield:
                     text.guiText.text = "SHIELD";
