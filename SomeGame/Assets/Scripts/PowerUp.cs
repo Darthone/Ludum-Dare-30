@@ -17,8 +17,9 @@ public class PowerUp : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")){
-            audio.enabled = true;
-            audio.PlayOneShot(sound);
+           // play audio
+			AudioSource.PlayClipAtPoint(sound, transform.position);
+
             PlayerController pc = collision.GetComponent<PlayerController>();
             GameController.control.score += (int)(points * GameController.control.multiplyer);
             GameObject text = (GameObject)Instantiate(floatingText, this.transform.position, Quaternion.identity);
