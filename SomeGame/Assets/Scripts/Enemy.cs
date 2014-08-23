@@ -4,13 +4,15 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
     public float moveSpeed = 1f;
-    public float shootSpeed = 0.4f;
+    public float shootSpeed = 0.5f;
     public float followDistance = 30f;
     public float laserSpeed = 25f;
+    int points = 250;
     
     bool canShoot = true;
     bool stateChanging = false;
     int enemyState = 0;
+    float minStateDelay = 1f;
     float maxStateDelay = 4f;
     int circle = 1;
     SpriteRenderer sr;
@@ -55,9 +57,13 @@ public class Enemy : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("PlayerBullet")) {
-            this.health -= 1;
+            this.health -= 1;          
             //add to score, draw points on screen
         }
+    }
+
+    void OnDestroy() {
+        GameController.control.score += (int)(points * GameController.control.multiplyer);
     }
 
     void FixedUpdate() {
@@ -102,43 +108,28 @@ public class Enemy : MonoBehaviour {
         //randomize ai movement
         switch (enemyState) {
             case 0: // chase player
-                if (target != player) {
-                    enemyState = 3;
-                    break;
-                }
                 //target.transform.position
                 rigidbody2D.AddForce((target.transform.position - this.transform.position) * moveSpeed);
 
-                //do stuff
-
                 if (!stateChanging) {
                     stateChanging = true;
-                    StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 4)), Random.Range(1f, maxStateDelay)));
+                    StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 5)), Random.Range(minStateDelay, maxStateDelay)));
                 }
                 break;
             case 1: // circle player
-                if (target != player) {
-                    enemyState = 3;
-                    break;
-                }
                 rigidbody2D.AddForce(this.transform.right * circle * 15f * moveSpeed);
                 if (!stateChanging) {
                     stateChanging = true;
-                    StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 4)), Random.Range(1f, maxStateDelay)));
+                    StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 5)), Random.Range(minStateDelay, maxStateDelay)));
                 }
                 break;
             case 2: // stay away from player
-                if (target != player) {
-                    enemyState = 3;
-                    break;
-                }
-                // stay away from player
                 if ((target.transform.position - this.transform.position).magnitude < followDistance)
                     rigidbody2D.AddForce((target.transform.position - this.transform.position) * moveSpeed * -1f);
 
                 if (!stateChanging) {
                     stateChanging = true;
-                    StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 4)), Random.Range(1f, maxStateDelay)));
+                    StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 5)), Random.Range(minStateDelay, maxStateDelay)));
                 }
                 break;
             case 3: // just attack core
@@ -147,7 +138,7 @@ public class Enemy : MonoBehaviour {
                     target = player;
                     if (!stateChanging) {
                         stateChanging = true;
-                        StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 4)), Random.Range(1f, maxStateDelay)));
+                        StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 5)), Random.Range(minStateDelay, maxStateDelay)));
                     }
                 } else
                     target = core;
@@ -155,15 +146,11 @@ public class Enemy : MonoBehaviour {
                 // shoot at core
                 if (!stateChanging && target != player) {
                     stateChanging = true;
-                    StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 4)), Random.Range(1f, maxStateDelay)));
+                    StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 5)), Random.Range(minStateDelay, maxStateDelay)));
                 }
                 break;
             case 4: // move around a bit
-                if (target != player) {
-                    enemyState = 3;
-                    break;
-                }
-                print("random");
+
                 // some sort of sporatic movement
                 rigidbody2D.AddForce((new Vector3(Random.value, Random.value, 0f)) * moveSpeed);
 
