@@ -4,6 +4,7 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 
     public static GameController control = null;
+    public Sprite[] guiImages;
     bool paused = false;
     public bool canPause = true;
 
@@ -13,7 +14,7 @@ public class GameController : MonoBehaviour {
 
     public long score = 0;
     public int lives = 3;
-    public int level = 0;
+    public int level = 4;
 
 	// Use this for initialization
     void Awake() {
@@ -58,6 +59,16 @@ public class GameController : MonoBehaviour {
             GUILayout.Label("Game is paused!");
             if (GUILayout.Button("Unpause"))
                 paused = togglePause();
+        } else {
+            // lives - top left
+            
+            //score - top right
+            
+            // layer - bottom left
+
+            // core health - top middle
+
+            // alerts
         }
     }
 
@@ -115,6 +126,12 @@ public class GameController : MonoBehaviour {
             guiTexture.color = Color.black;
             sceneEnding = false;
         }
+    }
+
+    public void GameOver() {
+        Application.LoadLevel(Application.loadedLevel);
+        // do some stuff
+        // go to main menu
     }
 
 }
