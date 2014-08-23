@@ -12,15 +12,13 @@ public class PowerUp : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	    // choose a type TODO
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    
+        thisType = (PowerUpType)Mathf.Round(Random.Range(1, 3));
 	}
 
     void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")){
+            audio.enabled = true;
+            audio.PlayOneShot(sound);
             PlayerController pc = collision.GetComponent<PlayerController>();
             GameController.control.score += (int)(points * GameController.control.multiplyer);
             GameObject text = (GameObject)Instantiate(floatingText, this.transform.position, Quaternion.identity);
