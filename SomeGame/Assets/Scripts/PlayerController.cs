@@ -5,7 +5,8 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject laserPrefab;
     public GameObject bombPrefab;
-
+    public GameObject shieldPrefab;
+    
     public bool canShoot = true;
     public bool canMove = true;
     public bool canBeHurt = true;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour {
 
     IEnumerator delayInvul(float delay) {
         yield return new WaitForSeconds(delay);
+        Destroy(this.transform.GetChild(0).gameObject);
         canBeHurt = true;
         delayedShield = false;
     }
@@ -71,6 +73,8 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
         //draw shield if invul TODO
         if (!canBeHurt && !delayedShield) {
+            GameObject shield = (GameObject)Instantiate(shieldPrefab, this.transform.position , Quaternion.AngleAxis(0, Vector3.forward));
+            shield.transform.parent = this.transform;
             delayedShield = true;
             StartCoroutine(delayInvul(3f));
         }
@@ -142,6 +146,8 @@ public class PlayerController : MonoBehaviour {
         StartCoroutine(GameController.control.Shake(0.5f, 3f));
         this.transform.position = Vector3.zero;
         this.rigidbody2D.velocity = Vector2.zero;
+        GameObject shield = (GameObject)Instantiate(shieldPrefab, this.transform.position, Quaternion.AngleAxis(0, Vector3.forward));
+        shield.transform.parent = this.transform;
         canBeHurt = false;
         StartCoroutine(delayInvul(3f)); // 3 second protected
         delayedShield = true;
