@@ -91,6 +91,8 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (Input.GetButtonDown("Fire2")){ // right click drop bombs
+            // creat bomb under player
+            GameObject laser = (GameObject)Instantiate(bombPrefab, this.transform.position, Quaternion.AngleAxis(0f, Vector3.forward));
 
         }
 
