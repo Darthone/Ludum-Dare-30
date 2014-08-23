@@ -7,7 +7,7 @@ public class Spawner : MonoBehaviour {
     float minSpawnTime = 1f;
     float maxSpawnTime = 3f;
     bool canSpawn = false;
-    float powerupChance = 0.15f;
+    float powerupChance = 0.20f;
 
     IEnumerator delaySpawn(float delay) {
         yield return new WaitForSeconds(delay + 1f);
@@ -27,10 +27,10 @@ public class Spawner : MonoBehaviour {
 	    // pick object to spawn
         if (canSpawn) {
             if (Random.value < powerupChance) {
-                GameObject enemy = (GameObject)Instantiate(powerupsToSpawn[(int)Mathf.Round(Random.Range(0, enemiesToSpawn.Length - 1))],
+                GameObject powerup = (GameObject)Instantiate(powerupsToSpawn[(int)Mathf.Round(Random.Range(0, enemiesToSpawn.Length - 1))],
                     (this.transform.position + (new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0f))),
                     Quaternion.AngleAxis(0f, Vector3.forward));
-                enemy.layer = (int)Random.Range(8, 8 + GameController.control.level); //this.gameObject.layer;
+                powerup.layer = (int)Random.Range(8, 8 + GameController.control.level); //this.gameObject.layer;
                 //spawn power up
             } else {
                 GameObject enemy = (GameObject)Instantiate(enemiesToSpawn[(int)Mathf.Round(Random.Range(0, enemiesToSpawn.Length - 1))], 
