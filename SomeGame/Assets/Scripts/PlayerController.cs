@@ -30,11 +30,18 @@ public class PlayerController : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("EnemyBullet")) {
-            GameController.control.lives -= 1;
-            laserCount = 0;
-            Respawn();
-            //add to score, draw points on screen
+        if (canBeHurt) {
+            if (collision.gameObject.CompareTag("EnemyBullet")) {
+                GameController.control.lives -= 1;
+                laserCount = 1;
+                if (GameController.control.lives > 0) {
+                    Respawn();
+                } else {
+                    GameController.control.GameOver();
+                }
+
+                //add to score, draw points on screen
+            }
         }
     }
 
@@ -102,8 +109,12 @@ public class PlayerController : MonoBehaviour {
 
     void Respawn(){
         this.transform.position = Vector3.zero;
+        this.rigidbody2D.velocity = Vector2.zero;
         canBeHurt = false;
         StartCoroutine(delayInvul(3f)); // 3 second protected
+        // play some exploding particles
     }
+
+    
 
 }
