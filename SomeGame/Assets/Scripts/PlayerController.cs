@@ -65,8 +65,19 @@ public class PlayerController : MonoBehaviour {
         }
 
         //switch between layers
-        if(true){ // place holder
-
+        if (Input.GetButtonDown("SwitchLeft")) { // place holder
+            if (this.gameObject.layer > 8) {
+                this.gameObject.layer--;
+                //play sound
+            } else { }
+                // play  sound
+        } else if (Input.GetButtonDown("SwitchRight")) {
+            if (this.gameObject.layer < 8 + GameController.control.level) {
+                this.gameObject.layer++;
+                //play sound
+            } else { 
+                // play sound
+            }
         }
 	}
 
