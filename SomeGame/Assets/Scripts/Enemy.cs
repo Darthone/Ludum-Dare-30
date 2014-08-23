@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour {
     float maxStateDelay = 4f;
     int circle = 1;
     SpriteRenderer sr;
+    public Sprite[] enemyImages;
 
     public int health = 1;
 
@@ -41,7 +42,12 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        player = GameController.control.player;
+        core  = GameController.control.core;
         sr = this.GetComponent<SpriteRenderer>();
+        if (enemyImages.Length > 0) {
+            sr.sprite = enemyImages[(int)Mathf.Round(Random.Range(0, enemyImages.Length - 1))];
+        }
         //play some cool animaiton on start
 	    // randomize starting stats
 	}
@@ -54,14 +60,24 @@ public class Enemy : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        sr.color = currentColor;
+        if (this.gameObject.layer != GameController.control.playerLayer) {
+            float temp = (this.gameObject.layer - 8 + 1) / (float)(GameController.control.playerLayer - 8);
+            sr.color = new Color(1f, 1f, 1f, temp); // grey scale
+            /*if (this.gameObject.layer < GameController.control.playerLayer) { // less "above"
+                
+            } else { //greater " below"
+
+            }*/
+            return;
+        }
+
+        sr.color = Color.white;
     }
 
 	// Update is called once per frame
 	void Update () {
         if (this.health <=0)
             Destroy(this.gameObject);
-
         if (this.gameObject.layer == player.gameObject.layer)
             target = player;
         else
@@ -75,7 +91,7 @@ public class Enemy : MonoBehaviour {
         //shooting
         if (canShoot) {
             GameObject laser = (GameObject)Instantiate(Projectiles[0], (this.transform.position + (new Vector3(Mathf.Cos(Mathf.Deg2Rad * rot_z) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * rot_z) * 1.5f))), Quaternion.AngleAxis(rot_z, Vector3.forward));
-            laser.gameObject.layer = this.gameObject.layer;
+            laser.layer = this.gameObject.layer;
             laser.rigidbody2D.velocity = laser.transform.right * laserSpeed;
             canShoot = false;
             StartCoroutine(delayShooting());
@@ -125,9 +141,13 @@ public class Enemy : MonoBehaviour {
                 break;
             case 3: // just attack core
                 // check if player is on this layer
-                if (this.gameObject.layer == player.gameObject.layer)
+                if (this.gameObject.layer == player.gameObject.layer) {
                     target = player;
-                else
+                    if (!stateChanging) {
+                        stateChanging = true;
+                        StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 4)), Random.Range(1f, maxStateDelay)));
+                    }
+                } else
                     target = core;
 
                 // shoot at core
