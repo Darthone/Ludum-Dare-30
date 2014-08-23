@@ -27,10 +27,12 @@ public class Spawner : MonoBehaviour {
 	    // pick object to spawn
         if (canSpawn) {
             if (Random.value < powerupChance) {
-                print("spawn powerup");
+                GameObject enemy = (GameObject)Instantiate(powerupsToSpawn[(int)Mathf.Round(Random.Range(0, enemiesToSpawn.Length - 1))],
+                    (this.transform.position + (new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0f))),
+                    Quaternion.AngleAxis(0f, Vector3.forward));
+                enemy.layer = (int)Random.Range(8, 8 + GameController.control.level); //this.gameObject.layer;
                 //spawn power up
             } else {
-                print("spawn enemy");
                 GameObject enemy = (GameObject)Instantiate(enemiesToSpawn[(int)Mathf.Round(Random.Range(0, enemiesToSpawn.Length - 1))], 
                     (this.transform.position + (new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0f))), 
                     Quaternion.AngleAxis(0f, Vector3.forward));
