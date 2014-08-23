@@ -4,6 +4,9 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 
     public static GameController control = null;
+    public GameObject player;
+    public GameObject core;
+    public int playerLayer = 8;
     public Sprite[] guiImages;
     bool paused = false;
     public bool canPause = true;
@@ -15,6 +18,10 @@ public class GameController : MonoBehaviour {
     public long score = 0;
     public int lives = 3;
     public int level = 4;
+
+    public float minSpawnTime = 1f;
+    public float maxSpawnTime = 3f;
+    public float powerupChance = 0.15f;
 
 	// Use this for initialization
     void Awake() {
@@ -47,6 +54,8 @@ public class GameController : MonoBehaviour {
 	}
 
     void FixedUpdate() {
+        playerLayer = player.layer;
+
         if (sceneStarting)
             StartScene();
         if (sceneEnding) {
@@ -130,6 +139,7 @@ public class GameController : MonoBehaviour {
 
     public void GameOver() {
         Application.LoadLevel(Application.loadedLevel);
+        Destroy(this.gameObject);
         // do some stuff
         // go to main menu
     }
