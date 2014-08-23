@@ -117,10 +117,13 @@ public class Enemy : MonoBehaviour {
                 break;
             case 3: // just attack core
                 // check if player is on this layer
+                if (this.gameObject.layer == player.gameObject.layer)
+                    target = player;
+                else
+                    target = core;
 
                 // shoot at core
-                print("just shooting");
-                if (!stateChanging ){//&& target != player) {
+                if (!stateChanging && target != player) {
                     stateChanging = true;
                     StartCoroutine(stateDelay((int)Mathf.Round(Random.Range(0, 4)), Random.Range(1f, maxStateDelay)));
                 }
