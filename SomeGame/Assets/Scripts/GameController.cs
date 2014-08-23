@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
     public int playerLayer = 8;
     public Texture2D[] guiLives;
     public Texture2D[] guiLevel;
+    GUIText myGUIText;
     //public Texture2D[] guiLives;
 
     bool paused = false;
@@ -61,6 +62,7 @@ public class GameController : MonoBehaviour {
 
         //fill screen with gui texture
         guiTexture.pixelInset = new Rect(0, 0, Screen.width, Screen.height);
+        myGUIText = this.GetComponent<GUIText>();
     }
 	
 	// Update is called once per frame
@@ -95,12 +97,18 @@ public class GameController : MonoBehaviour {
                 paused = togglePause();
         } else {
             // lives - top left
-            GUI.DrawTexture( new Rect(0f,0f,50f,30f), guiLives[lives]);
+            GUI.DrawTexture( new Rect(30f,15f,110f,22f), guiLives[lives]);
+            myGUIText.text = "SCORE: " + score.ToString();
+
             //score - top right
+            myGUIText.pixelOffset = new Vector2(Screen.width - 250, Screen.height - 15);
             
+            
+            //GUILayout.Label(
+            //GUILayout.Label(new Rect(Screen.Width - 200f, 15f, 110f, 22f), "");
             // layer - bottom left
 
-            // core health - top middle
+            // core health - top center
 
             // alerts
         }
