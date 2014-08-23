@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour {
 
     public long score = 0;
     public int lives = 3;
+    public int level = 0;
 
 	// Use this for initialization
     void Awake() {

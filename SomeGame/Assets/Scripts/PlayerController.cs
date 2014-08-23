@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
 
     public bool canShoot = true;
     public bool canMove = true;
+    public bool canBeHurt = true;
 
     public float shootSpeed = 0.25f;
     public float maxSpeed = 1f;
@@ -21,6 +22,20 @@ public class PlayerController : MonoBehaviour {
     IEnumerator delayShooting() {
         yield return new WaitForSeconds(shootSpeed);
         canShoot = true;
+    }
+
+    IEnumerator delayInvul(float delay) {
+        yield return new WaitForSeconds(delay);
+        canBeHurt = true;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("EnemyBullet")) {
+            GameController.control.lives -= 1;
+            laserCount = 0;
+            Respawn();
+            //add to score, draw points on screen
+        }
     }
 
 	// Use this for initialization
@@ -50,15 +65,19 @@ public class PlayerController : MonoBehaviour {
         }
 
         //switch between layers
+        if(true){ // place holder
 
+        }
 	}
 
     void FixedUpdate() {
-        Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        // face mouse
+        Vector3 diff = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
         diff.Normalize();
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
-
+        
+        //get movement input
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Move(h, v);
@@ -68,6 +87,12 @@ public class PlayerController : MonoBehaviour {
         // Move the character
         rigidbody2D.AddForce(new Vector2(hMove * SPEEDCONSTANT * maxSpeed, vMove * SPEEDCONSTANT * maxSpeed));
         //rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
+    }
+
+    void Respawn(){
+        this.transform.position = Vector3.zero;
+        canBeHurt = false;
+        StartCoroutine(delayInvul(3f)); // 3 second protected
     }
 
 }
