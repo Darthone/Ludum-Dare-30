@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
     public float shootSpeed = 0.25f;
     public float maxSpeed = 1f;
     public float SPEEDCONSTANT = 20F;
-    public float laserSpeed = 20f;
+    public float laserSpeed = 30f;
 
     bool delayedShield = false;
     //float maxSpeed = 
@@ -64,9 +64,6 @@ public class PlayerController : MonoBehaviour {
             bottomLeft.y,
             topRight.x - bottomLeft.x,
             topRight.y - bottomLeft.y);
-        //print(this.gameObject.layer);
-        //this.gameObject.layer = 9;
-        //print(this.gameObject.layer);
     }
 	
 	// Update is called once per frame
@@ -89,15 +86,18 @@ public class PlayerController : MonoBehaviour {
             GameObject laser = (GameObject)Instantiate(laserPrefab, (this.transform.position + (new Vector3(Mathf.Cos(Mathf.Deg2Rad * rot_z) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * rot_z) * 1.5f))), Quaternion.AngleAxis(rot_z, Vector3.forward));
             laser.layer = this.gameObject.layer;
             laser.rigidbody2D.velocity = laser.transform.right * laserSpeed;
+
+
             canShoot = false;
             StartCoroutine(delayShooting());
+
             //laser count
         }
 
-        if (Input.GetButtonDown("Fire2")){ // right click drop bombs
+        if (bombs > 0 && Input.GetButtonDown("Fire2")){ // right click drop bombs
             // creat bomb under player
             GameObject laser = (GameObject)Instantiate(bombPrefab, this.transform.position, Quaternion.AngleAxis(0f, Vector3.forward));
-
+            bombs--;
         }
 
         //switch between layers
