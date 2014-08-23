@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour {
     int circle = 1;
     SpriteRenderer sr;
     public Sprite[] enemyImages;
+    public AudioClip laserSound;
 
     public int health = 1;
 
@@ -90,6 +91,7 @@ public class Enemy : MonoBehaviour {
 
         //shooting
         if (canShoot) {
+            audio.PlayOneShot(laserSound);
             GameObject laser = (GameObject)Instantiate(Projectiles[0], (this.transform.position + (new Vector3(Mathf.Cos(Mathf.Deg2Rad * rot_z) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * rot_z) * 1.5f))), Quaternion.AngleAxis(rot_z, Vector3.forward));
             laser.layer = this.gameObject.layer;
             laser.rigidbody2D.velocity = laser.transform.right * laserSpeed;
