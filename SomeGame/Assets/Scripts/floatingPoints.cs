@@ -4,9 +4,9 @@ using System.Collections;
 public class floatingPoints : MonoBehaviour {
 
     public GUIText myGUItext;
-    public float alpha = 1f;
-    public float scroll = 0.1f;
-    public float duration = 1f;
+    float alpha = 1f;
+    float scroll = 0.15f;
+    float duration = 1.5f;
 
 	// Use this for initialization
 	void Start () {

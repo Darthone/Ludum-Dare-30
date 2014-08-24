@@ -26,17 +26,18 @@ public class Spawner : MonoBehaviour {
         
 	    // pick object to spawn
         if (canSpawn) {
+            int spawnLayer = (int)Random.Range(8, 8 + GameController.control.level);
             if (Random.value < powerupChance) {
                 GameObject powerup = (GameObject)Instantiate(powerupsToSpawn[(int)Mathf.Round(Random.Range(0, enemiesToSpawn.Length - 1))],
-                    (this.transform.position + (new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0f))),
+                    (this.transform.position + (new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), (spawnLayer - 8) * 100f))),
                     Quaternion.AngleAxis(0f, Vector3.forward));
-                powerup.layer = (int)Random.Range(8, 8 + GameController.control.level); //this.gameObject.layer;
+                powerup.layer = spawnLayer;
                 //spawn power up
             } else {
-                GameObject enemy = (GameObject)Instantiate(enemiesToSpawn[(int)Mathf.Round(Random.Range(0, enemiesToSpawn.Length - 1))], 
-                    (this.transform.position + (new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0f))), 
+                GameObject enemy = (GameObject)Instantiate(enemiesToSpawn[(int)Mathf.Round(Random.Range(0, enemiesToSpawn.Length - 1))],
+                    (this.transform.position + (new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), (spawnLayer - 8) * 100f))), 
                     Quaternion.AngleAxis(0f, Vector3.forward));
-                enemy.layer = (int)Random.Range(8, 8 + GameController.control.level); //this.gameObject.layer;
+                enemy.layer = spawnLayer;
 
                 // spawn enemy
             }
