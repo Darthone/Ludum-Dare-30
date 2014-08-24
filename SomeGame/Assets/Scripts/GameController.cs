@@ -5,11 +5,15 @@ public class GameController : MonoBehaviour {
 
     public static GameController control = null;
     public GameObject player;
+    PlayerController pc;
     public GameObject core;
     public int playerLayer = 8;
     public Texture2D[] guiLives;
     public Texture2D[] guiLevel;
+    public Texture2D bombTex;
+
     GUIText myGUIText;
+    GUIStyle myGUIStyle;
     //public Texture2D[] guiLives;
 
     bool paused = false;
@@ -64,6 +68,13 @@ public class GameController : MonoBehaviour {
         //fill screen with gui texture
         guiTexture.pixelInset = new Rect(0, 0, Screen.width, Screen.height);
         myGUIText = this.GetComponent<GUIText>();
+        myGUIText.pixelOffset = new Vector2(Screen.width - 30f, Screen.height - 15f);
+        myGUIStyle = new GUIStyle();
+        myGUIStyle.fontStyle = myGUIText.fontStyle;
+        myGUIStyle.fontSize = myGUIText.fontSize;
+        myGUIStyle.font = myGUIText.font;
+        myGUIStyle.normal.textColor = Color.white;
+        pc = player.GetComponent<PlayerController>();
     }
 	
 	// Update is called once per frame
@@ -99,26 +110,26 @@ public class GameController : MonoBehaviour {
         } else {
             // lives - top left
             GUI.DrawTexture( new Rect(30f,15f,110f,22f), guiLives[lives]);
-            myGUIText.text = "SCORE: " + score.ToString();
 
             //score - top right
-            myGUIText.pixelOffset = new Vector2(Screen.width - 250, Screen.height - 15f);
+            myGUIText.text = "SCORE: " + score.ToString();
             
             // layer - bottom left
-            float boxHeight = 7f;
+            float boxHeight = 26f;
             float boxDelim = 3f;
-            float boxWidth = 5f;
+            float boxWidth = 14f;
             for(int i = 0;  i <= level; i ++){
                 //if level alerted draw different Texture
                 if (playerLayer - 8 == i) {
-                    GUI.DrawTexture(new Rect(30f + i * (boxWidth + boxDelim), Screen.height - 15f + boxHeight, boxWidth, boxHeight), guiLevel[0]);
+                    GUI.DrawTexture(new Rect(30f + i * (boxWidth + boxDelim), Screen.height - 30f - boxHeight, boxWidth, boxHeight), guiLevel[0]);
                 } else {
-                    GUI.DrawTexture(new Rect(30f + i * (boxWidth + boxDelim), Screen.height - 15f + boxHeight, boxWidth, boxHeight), guiLevel[1]);
+                    GUI.DrawTexture(new Rect(30f + i * (boxWidth + boxDelim), Screen.height - 30f - boxHeight, boxWidth, boxHeight), guiLevel[1]);
                 }
             }
             
-
-            // alerts
+            //bombs
+            GUI.Label(new Rect(Screen.width - 54f -  33f, Screen.height - 30f - boxHeight + 1f, boxWidth + 10f, boxHeight), "x" + pc.bombs.ToString(), myGUIStyle);
+            GUI.DrawTexture(new Rect(Screen.width - 54f, Screen.height - 30f - boxHeight, boxWidth + 10f, boxHeight), bombTex);
         }
     }
 
