@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour {
     SpriteRenderer sr;
     public Sprite[] enemyImages;
     public AudioClip laserSound;
+	public AudioClip enemyDieSound;
 
     public int health = 1;
 
@@ -89,6 +90,7 @@ public class Enemy : MonoBehaviour {
             textPoints.guiText.text = "+" + addScore.ToString();
             GameObject explosion = (GameObject)Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
             Destroy(this.gameObject);
+			AudioSource.PlayClipAtPoint(enemyDieSound, transform.position);
         }
         if (this.gameObject.layer == player.gameObject.layer)
             target = player;
