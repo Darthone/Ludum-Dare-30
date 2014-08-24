@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour {
     public bool gameOver = false;
 
 	public AudioClip newWorldAvailableSound;
+    public AudioClip gameoverSound;
 
     public long score = 0;
     public float multiplyer = 1.0f;
@@ -121,29 +122,32 @@ public class GameController : MonoBehaviour {
             GUILayout.Label("Game is paused!");
             if (GUILayout.Button("Unpause"))
                 paused = togglePause();
-        } else {
+        } else if (!gameOver) {
             // lives - top left
-            GUI.DrawTexture( new Rect(30f,15f,110f,22f), guiLives[lives]);
+            GUI.DrawTexture(new Rect(30f, 15f, 110f, 22f), guiLives[lives]);
 
             //score - top right
             myGUIText.text = "SCORE: " + score.ToString();
-            
+
             // layer - bottom left
             float boxHeight = 26f;
             float boxDelim = 3f;
             float boxWidth = 14f;
-            for(int i = 0;  i <= level; i ++){
+            for (int i = 0; i <= level; i++) {
                 //if level alerted draw different Texture
                 if (playerLayer - 8 == i) {
                     GUI.DrawTexture(new Rect(30f + i * (boxWidth + boxDelim), Screen.height - 30f - boxHeight, boxWidth, boxHeight), guiLevel[0]);
-                } else {
+                }
+                else {
                     GUI.DrawTexture(new Rect(30f + i * (boxWidth + boxDelim), Screen.height - 30f - boxHeight, boxWidth, boxHeight), guiLevel[1]);
                 }
             }
-            
+
             //bombs
-            GUI.Label(new Rect(Screen.width - 54f -  33f, Screen.height - 30f - boxHeight + 1f, boxWidth + 10f, boxHeight), "x" + pc.bombs.ToString(), myGUIStyle);
+            GUI.Label(new Rect(Screen.width - 54f - 33f, Screen.height - 30f - boxHeight + 1f, boxWidth + 10f, boxHeight), "x" + pc.bombs.ToString(), myGUIStyle);
             GUI.DrawTexture(new Rect(Screen.width - 54f, Screen.height - 30f - boxHeight, boxWidth + 10f, boxHeight), bombTex);
+        } else {
+            myGUIText.text = "SCORE: " + score.ToString();
         }
     }
 
@@ -161,6 +165,7 @@ public class GameController : MonoBehaviour {
     //Fading Functions
     void OnLevelWasLoaded() {
         sceneStarting = true;
+        StartScene();
     }
 
     void FadeToClear() {
@@ -205,10 +210,22 @@ public class GameController : MonoBehaviour {
 
     public void GameOver() {
         gameOver = true;
-        Application.LoadLevel(Application.loadedLevel);
+        //play game over sound
+        pc.canMove = false;
+        pc.canShoot = false;
+        pc.active = false;
+        AudioSource.PlayClipAtPoint(gameoverSound, this.transform.position);
+        sceneEnding = true;
+        FadeToBlack();
+        myGUIText.anchor = TextAnchor.MiddleCenter;
+        myGUIText.fontSize = 60;
+        myGUIText.pixelOffset = new Vector2(Screen.width/2f, Screen.height /2f);
+        Invoke("RestartGame", 5f);
+    }
+
+    void RestartGame() {
+        Application.LoadLevel("MainMenu");
         Destroy(this.gameObject);
-        // do some stuff
-        // go to main menu
     }
 
     void CheckScore() {
