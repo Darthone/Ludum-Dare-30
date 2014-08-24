@@ -209,18 +209,20 @@ public class GameController : MonoBehaviour {
     }
 
     public void GameOver() {
-        gameOver = true;
-        //play game over sound
-        pc.canMove = false;
-        pc.canShoot = false;
-        pc.active = false;
-        AudioSource.PlayClipAtPoint(gameoverSound, this.transform.position);
-        sceneEnding = true;
-        FadeToBlack();
-        myGUIText.anchor = TextAnchor.MiddleCenter;
-        myGUIText.fontSize = 60;
-        myGUIText.pixelOffset = new Vector2(Screen.width/2f, Screen.height /2f);
-        Invoke("RestartGame", 5f);
+        if (!gameOver) {
+            gameOver = true;
+            //play game over sound
+            pc.canMove = false;
+            pc.canShoot = false;
+            player.gameObject.active = false;
+            AudioSource.PlayClipAtPoint(gameoverSound, this.transform.position);
+            sceneEnding = true;
+            FadeToBlack();
+            myGUIText.anchor = TextAnchor.MiddleCenter;
+            myGUIText.fontSize = 60;
+            myGUIText.pixelOffset = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Invoke("RestartGame", 5f);
+        }
     }
 
     void RestartGame() {

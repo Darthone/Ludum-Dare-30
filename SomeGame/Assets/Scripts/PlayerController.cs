@@ -126,6 +126,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("SwitchLeft")) { // place holder
             if (this.gameObject.layer > 8) {
                 this.gameObject.layer--;
+                this.transform.position -= new Vector3(0f, 0f, 100f);
 				audio.PlayOneShot(worldChangeSound);
             } else { 
                 // play  sound
@@ -135,6 +136,7 @@ public class PlayerController : MonoBehaviour {
             if (this.gameObject.layer < 8 + GameController.control.level) {
                 this.gameObject.layer++;
 				audio.PlayOneShot(worldChangeSound);
+                this.transform.position += new Vector3(0f, 0f, 100f);
             } else { 
 				audio.PlayOneShot(worldChangeErrorSound);
             }
@@ -142,8 +144,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
     void FixedUpdate() {
-        //keep on screen
-
         // face mouse
         Vector3 diff = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
         diff.Normalize();
@@ -159,12 +159,11 @@ public class PlayerController : MonoBehaviour {
     void Move(float hMove, float vMove) {
         // Move the character
         rigidbody2D.AddForce(new Vector2(hMove * SPEEDCONSTANT * maxSpeed, vMove * SPEEDCONSTANT * maxSpeed));
-        //rigidbody2D.velocity = new Vector2(move * maxSpeed, rigidbody2D.velocity.y);
     }
 
     void Respawn(){
         StartCoroutine(GameController.control.Shake(0.5f, 3f));
-        this.transform.position = Vector3.zero;
+        this.transform.position = new Vector3(0f, 0f, transform.position.z);
         this.rigidbody2D.velocity = Vector2.zero;
         GameObject shield = (GameObject)Instantiate(shieldPrefab, this.transform.position, Quaternion.AngleAxis(0, Vector3.forward));
         GameObject explosion = (GameObject)Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
@@ -172,7 +171,7 @@ public class PlayerController : MonoBehaviour {
         canBeHurt = false;
         StartCoroutine(delayInvul(5f)); // 3 second protected
         delayedShield = true;
-        // play some exploding particles TODO
+        // play some exploding particles
 		AudioSource.PlayClipAtPoint(playerDieSound, transform.position);
     }
 
