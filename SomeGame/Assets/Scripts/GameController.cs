@@ -28,13 +28,13 @@ public class GameController : MonoBehaviour {
     public float multiplyer = 1.0f;
     public int lives = 5;
     public int level = 0;
-    long threshold = 5000;
+    long threshold = 2500;
 
     public bool[] underAttack;
 
     public float minSpawnTime = 1f;
     public float maxSpawnTime = 3f;
-    public float powerupChance = 0.15f;
+    public float powerupChance = .20f;
 
     public IEnumerator Shake(float duration, float magnitude) {
         // shakes the camera
@@ -207,7 +207,7 @@ public class GameController : MonoBehaviour {
 
     void CheckScore() {
         if (score >= threshold) {
-            if (threshold <= 15000) {
+            if (threshold < 15000) {
                 //TODO Alert player that he has to change worlds
                 //GUI.Label(new Rect(30, Screen.height - 30f - boxHeight + 1f, boxWidth + 10f, boxHeight), "x" + pc.bombs.ToString(), myGUIStyle);
                 multiplyer += 0.5f;
