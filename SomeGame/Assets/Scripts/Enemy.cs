@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour {
     public float moveSpeed = 1f;
     public float shootSpeed = 0.5f;
     public float followDistance = 30f;
-    public float laserSpeed = 25f;
+    public float laserSpeed = 30f;
     int points = 250;
     
     bool canShoot = true;

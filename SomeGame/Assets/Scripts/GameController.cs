@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour {
     public long score = 0;
     public float multiplyer = 1.0f;
     public int lives = 5;
-    public int level = 4;
+    public int level = 0;
 
     public float minSpawnTime = 1f;
     public float maxSpawnTime = 3f;
