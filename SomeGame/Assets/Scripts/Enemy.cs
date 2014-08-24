@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour {
     float minStateDelay = 1f;
     float maxStateDelay = 4f;
     int circle = 1;
+    public GameObject floatingText;
     SpriteRenderer sr;
     public Sprite[] enemyImages;
     public AudioClip laserSound;
@@ -62,9 +63,6 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    void OnDestroy() {
-        GameController.control.score += (int)(points * GameController.control.multiplyer);
-    }
 
     void FixedUpdate() {
         if (this.gameObject.layer != GameController.control.playerLayer) {
@@ -83,8 +81,13 @@ public class Enemy : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (this.health <=0)
+        if (this.health <= 0) {
+            int addScore = (int)(points * GameController.control.multiplyer);
+            GameController.control.score += addScore;
+            GameObject textPoints = (GameObject)Instantiate(floatingText, this.transform.position, Quaternion.identity);
+            textPoints.guiText.text = "+" + addScore.ToString();
             Destroy(this.gameObject);
+        }
         if (this.gameObject.layer == player.gameObject.layer)
             target = player;
         else
