@@ -35,7 +35,7 @@ public class Bomb : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Player") && !collision.CompareTag("PowerUp") && !collision.CompareTag("PowerUp") &&
             !collision.CompareTag("DND")) {
-            Destroy(collision.gameObject);
+                collision.GetComponent<Enemy>().health -= 100;
         }
     }
 }
