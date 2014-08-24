@@ -102,9 +102,22 @@ public class GameController : MonoBehaviour {
             myGUIText.text = "SCORE: " + score.ToString();
 
             //score - top right
-            myGUIText.pixelOffset = new Vector2(Screen.width - 250, Screen.height - 15);
+            myGUIText.pixelOffset = new Vector2(Screen.width - 250, Screen.height - 15f);
             
             // layer - bottom left
+            float boxHeight = 7f;
+            float boxDelim = 3f;
+            float boxWidth = 5f;
+            for(int i = 0;  i <= level; i ++){
+                //if level alerted draw different Texture
+                if (playerLayer - 8 == i) {
+                    GUI.DrawTexture(new Rect(30f + i * (boxWidth + boxDelim), Screen.height - 15f + boxHeight, boxWidth, boxHeight), guiLevel[0]);
+                } else {
+                    GUI.DrawTexture(new Rect(30f + i * (boxWidth + boxDelim), Screen.height - 15f + boxHeight, boxWidth, boxHeight), guiLevel[1]);
+                }
+            }
+            
+
             // alerts
         }
     }

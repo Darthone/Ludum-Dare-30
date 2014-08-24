@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour {
         if (canBeHurt) {
             if (collision.gameObject.CompareTag("EnemyBullet")) {
                 GameController.control.lives -= 1;
-                laserCount = 1;
+                //laserCount = 1;
                 if (GameController.control.lives >= 0) {
                     Respawn();
                 } else {
