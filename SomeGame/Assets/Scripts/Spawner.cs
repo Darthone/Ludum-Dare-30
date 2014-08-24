@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviour {
         
 	    // pick object to spawn
         if (canSpawn) {
-            int spawnLayer = (int)Random.Range(8, 8 + GameController.control.level);
+            int spawnLayer = (int)Random.Range(8, 9 + GameController.control.level);
             if (Random.value < powerupChance) {
                 GameObject powerup = (GameObject)Instantiate(powerupsToSpawn[(int)Mathf.Round(Random.Range(0, enemiesToSpawn.Length - 1))],
                     (this.transform.position + (new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), (spawnLayer - 8) * 100f))),

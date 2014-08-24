@@ -65,22 +65,6 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-
-    void FixedUpdate() {
-        /*if (this.gameObject.layer != GameController.control.playerLayer) {
-            float temp = (this.gameObject.layer - 8 + 1) / (float)(GameController.control.playerLayer - 8);
-            sr.color = new Color(1f, 1f, 1f, temp); // grey scale
-            /*if (this.gameObject.layer < GameController.control.playerLayer) { // less "above"
-                
-            } else { //greater " below"
-
-            }*
-            return;
-        }
-
-        sr.color = Color.white;*/
-    }
-
 	// Update is called once per frame
 	void Update () {
         if (this.health <= 0) {
