@@ -3,10 +3,8 @@ using System.Collections;
 
 public class Core : MonoBehaviour {
     public int coreHealth = 400;
-    public Texture2D healthbar;
     int coreMaxHealth = 400;
     float barDisplay = 0f;
-    Vector2 pos = Vector2.zero;
     Vector2 size = new Vector2(100f, 5f);
 
 	// Use this for initialization
