@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour {
     float maxStateDelay = 4f;
     int circle = 1;
     public GameObject floatingText;
+    public GameObject explosionPrefab;
     SpriteRenderer sr;
     public Sprite[] enemyImages;
     public AudioClip laserSound;
@@ -86,6 +87,7 @@ public class Enemy : MonoBehaviour {
             GameController.control.score += addScore;
             GameObject textPoints = (GameObject)Instantiate(floatingText, this.transform.position, Quaternion.identity);
             textPoints.guiText.text = "+" + addScore.ToString();
+            GameObject explosion = (GameObject)Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
         if (this.gameObject.layer == player.gameObject.layer)
