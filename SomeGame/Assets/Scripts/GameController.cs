@@ -39,6 +39,15 @@ public class GameController : MonoBehaviour {
     public float maxSpawnTime = 3f;
     public float powerupChance = .20f;
 
+    IEnumerator IncreaseMultiplyer(float delay) {
+        yield return new WaitForSeconds(delay);
+        multiplyer += 0.5f + 0.05f * delay;
+        minSpawnTime = Mathf.Clamp(minSpawnTime -0.1f, 0.1f, 1f);
+        maxSpawnTime = Mathf.Clamp(maxSpawnTime - 0.2f, 1.5f, 3f);
+        powerupChance = Mathf.Clamp(powerupChance + 0.01f, 0.20f, 0.33f);
+        StartCoroutine(IncreaseMultiplyer(0.04f * delay * delay + 1f + delay));
+    }
+
     public IEnumerator Shake(float duration, float magnitude) {
         // shakes the camera
         float elapsed = 0.0f;
@@ -85,6 +94,7 @@ public class GameController : MonoBehaviour {
         for (int i = 0; i < underAttack.Length; i++) {
             underAttack[i] = false;
         }
+        StartCoroutine(IncreaseMultiplyer(8f));
     }
 	
 	// Update is called once per frame
