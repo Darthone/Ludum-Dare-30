@@ -35,7 +35,7 @@ public class PowerUp : MonoBehaviour {
                 case PowerUpType.Upgrade:
                     text.guiText.text = "LASERS +";
                     pc.laserCount++;
-                    pc.shootSpeed -= 0.03f;
+                    pc.shootSpeed -= 0.02f;
                     pc.laserSpeed++;
                     break;
 
@@ -46,7 +46,7 @@ public class PowerUp : MonoBehaviour {
 
                 case PowerUpType.Speed:
                     text.guiText.text = "SPEED +";
-                    pc.maxSpeed += 0.25f;
+                    pc.maxSpeed += 0.15f;
                     break;
             }
             Destroy(this.gameObject);

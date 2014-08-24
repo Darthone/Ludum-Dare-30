@@ -54,6 +54,8 @@ public class Enemy : MonoBehaviour {
         if (enemyImages.Length > 0) {
             sr.sprite = enemyImages[(int)Mathf.Round(Random.Range(0, enemyImages.Length - 1))];
         }
+
+
         //play some cool animaiton on start
 	    // randomize starting stats
 	}
@@ -61,6 +63,7 @@ public class Enemy : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("PlayerBullet")) {
             this.health -= 1;          
+            Destroy(collision.gameObject);
             //add to score, draw points on screen
         }
     }
