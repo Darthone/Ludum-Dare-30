@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
         if (canBeHurt) {
             if (collision.gameObject.CompareTag("EnemyBullet")) {
+                Destroy(collision.gameObject);
                 GameController.control.lives -= 1;
                 //laserCount = 1;
                 if (GameController.control.lives >= 0) {
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour {
             GameObject shield = (GameObject)Instantiate(shieldPrefab, this.transform.position , Quaternion.AngleAxis(0, Vector3.forward));
             shield.transform.parent = this.transform;
             delayedShield = true;
-            StartCoroutine(delayInvul(5f));
+            StartCoroutine(delayInvul(8f));
         }
 
         //fire
@@ -169,7 +170,7 @@ public class PlayerController : MonoBehaviour {
         GameObject explosion = (GameObject)Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
 		shield.transform.parent = this.transform;
         canBeHurt = false;
-        StartCoroutine(delayInvul(5f)); // 3 second protected
+        StartCoroutine(delayInvul(4f)); // 4 second protected
         delayedShield = true;
         // play some exploding particles
 		AudioSource.PlayClipAtPoint(playerDieSound, transform.position);
