@@ -52,17 +52,6 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-	// Use this for initialization
-	void Start () {
-        var bottomLeft = Camera.main.camera.ScreenToWorldPoint(Vector3.zero);
-        var topRight = Camera.main.camera.ScreenToWorldPoint(new Vector3(
-            Camera.main.camera.pixelWidth, Camera.main.camera.pixelHeight));
-        cameraRect = new Rect(
-            bottomLeft.x,
-            bottomLeft.y,
-            topRight.x - bottomLeft.x,
-            topRight.y - bottomLeft.y);
-    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -150,10 +139,6 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate() {
         //keep on screen
-        transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, cameraRect.xMin, cameraRect.xMax),
-            Mathf.Clamp(transform.position.y, cameraRect.yMin, cameraRect.yMax),
-            0f);
 
         // face mouse
         Vector3 diff = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
