@@ -14,13 +14,10 @@ public class PlayerController : MonoBehaviour {
 
     public float shootSpeed = 0.25f;
     public float maxSpeed = 1f;
-    public float SPEEDCONSTANT = 20F;
-    public float laserSpeed = 30f;
+    public float SPEEDCONSTANT = 40f;
+    public float laserSpeed = 45f;
 
     bool delayedShield = false;
-    
-    //float maxSpeed = 
-    //float damping = 
 
     public int laserCount = 1;
     public int bombs = 1;
@@ -49,8 +46,6 @@ public class PlayerController : MonoBehaviour {
                     GameController.control.GameOver();
                     GameController.control.lives = 3;
                 }
-
-                //add to score, draw points on screen
             }
         }
     }
@@ -83,11 +78,44 @@ public class PlayerController : MonoBehaviour {
             Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             diff.Normalize();
             float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            float rotation = 0f;
+            switch (laserCount) {
+                default:
+                case 4:
+                    rotation = 90f;
+                    GameObject laser5 = (GameObject)Instantiate(laserPrefab, (this.transform.position + (new Vector3(Mathf.Cos(Mathf.Deg2Rad * (rot_z + rotation)) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * (rot_z + rotation)) * 1.5f))), Quaternion.AngleAxis(rot_z + rotation, Vector3.forward));
+                    laser5.layer = this.gameObject.layer;
+                    laser5.rigidbody2D.velocity = laser5.transform.right * laserSpeed;
 
-            GameObject laser = (GameObject)Instantiate(laserPrefab, (this.transform.position + (new Vector3(Mathf.Cos(Mathf.Deg2Rad * rot_z) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * rot_z) * 1.5f))), Quaternion.AngleAxis(rot_z, Vector3.forward));
-            laser.layer = this.gameObject.layer;
-            laser.rigidbody2D.velocity = laser.transform.right * laserSpeed;
+                    GameObject laser4 = (GameObject)Instantiate(laserPrefab, (this.transform.position + (new Vector3(Mathf.Cos(Mathf.Deg2Rad * (rot_z - rotation)) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * (rot_z - rotation)) * 1.5f))), Quaternion.AngleAxis(rot_z - rotation, Vector3.forward));
+                    laser4.layer = this.gameObject.layer;
+                    laser4.rigidbody2D.velocity = laser4.transform.right * laserSpeed;
+                    goto case 3;
+                    
+                case 3:
+                    rotation = 30f;
+                    GameObject laser3 = (GameObject)Instantiate(laserPrefab, (this.transform.position + (new Vector3(Mathf.Cos(Mathf.Deg2Rad * (rot_z + rotation)) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * (rot_z + rotation)) * 1.5f))), Quaternion.AngleAxis(rot_z + rotation, Vector3.forward));
+                    laser3.layer = this.gameObject.layer;
+                    laser3.rigidbody2D.velocity = laser3.transform.right * laserSpeed;
 
+                    GameObject laser2 = (GameObject)Instantiate(laserPrefab, (this.transform.position + (new Vector3(Mathf.Cos(Mathf.Deg2Rad * (rot_z - rotation)) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * (rot_z - rotation)) * 1.5f))), Quaternion.AngleAxis(rot_z - rotation, Vector3.forward));
+                    laser2.layer = this.gameObject.layer;
+                    laser2.rigidbody2D.velocity = laser2.transform.right * laserSpeed;
+                    goto case 2;
+                    
+                case 2:
+                    GameObject laser1 = (GameObject)Instantiate(laserPrefab, (this.transform.position - (new Vector3(Mathf.Cos(Mathf.Deg2Rad * rot_z) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * rot_z) * 1.5f))), Quaternion.AngleAxis(rot_z, Vector3.forward));
+                    laser1.layer = this.gameObject.layer;
+                    laser1.rigidbody2D.velocity = -laser1.transform.right * laserSpeed;
+                    goto case 1;
+
+                case 1:
+                    GameObject laser0 = (GameObject)Instantiate(laserPrefab, (this.transform.position + (new Vector3(Mathf.Cos(Mathf.Deg2Rad * rot_z) * 1.5f, Mathf.Sin(Mathf.Deg2Rad * rot_z) * 1.5f))), Quaternion.AngleAxis(rot_z, Vector3.forward));
+                    laser0.layer = this.gameObject.layer;
+                    laser0.rigidbody2D.velocity = laser0.transform.right * laserSpeed;
+                    break;   
+            }
+            
 
             canShoot = false;
             StartCoroutine(delayShooting());
