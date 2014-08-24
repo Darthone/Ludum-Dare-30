@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour {
     float fadeSpeed = 3f;          // Speed that the screen fades to and from black.
     private bool sceneStarting = true;      // Whether or not the scene is still fading in.
     public bool sceneEnding = false;
+    public bool gameOver = false;
 
     public long score = 0;
     public float multiplyer = 1.0f;
@@ -103,13 +104,7 @@ public class GameController : MonoBehaviour {
             //score - top right
             myGUIText.pixelOffset = new Vector2(Screen.width - 250, Screen.height - 15);
             
-            
-            //GUILayout.Label(
-            //GUILayout.Label(new Rect(Screen.Width - 200f, 15f, 110f, 22f), "");
             // layer - bottom left
-
-            // core health - top center
-
             // alerts
         }
     }
@@ -171,6 +166,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void GameOver() {
+        gameOver = true;
         Application.LoadLevel(Application.loadedLevel);
         Destroy(this.gameObject);
         // do some stuff
