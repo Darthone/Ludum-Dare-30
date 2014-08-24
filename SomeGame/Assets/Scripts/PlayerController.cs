@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
     public float laserSpeed = 30f;
 
     bool delayedShield = false;
+    
     //float maxSpeed = 
     //float damping = 
 
@@ -96,7 +97,7 @@ public class PlayerController : MonoBehaviour {
 
         if (bombs > 0 && Input.GetButtonDown("Fire2")){ // right click drop bombs
             // creat bomb under player
-            GameObject laser = (GameObject)Instantiate(bombPrefab, this.transform.position, Quaternion.AngleAxis(0f, Vector3.forward));
+            GameObject bomb = (GameObject)Instantiate(bombPrefab, this.transform.position, Quaternion.AngleAxis(0f, Vector3.forward));
             bombs--;
         }
 
