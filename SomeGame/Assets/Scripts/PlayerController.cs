@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     public bool canMove = true;
     public bool canBeHurt = true;
     public AudioClip laserSound;
+	public AudioClip playerDieSound;
 
     public float shootSpeed = 0.25f;
     public float maxSpeed = 1f;
@@ -178,11 +179,12 @@ public class PlayerController : MonoBehaviour {
         this.rigidbody2D.velocity = Vector2.zero;
         GameObject shield = (GameObject)Instantiate(shieldPrefab, this.transform.position, Quaternion.AngleAxis(0, Vector3.forward));
         GameObject explosion = (GameObject)Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
-        shield.transform.parent = this.transform;
+		shield.transform.parent = this.transform;
         canBeHurt = false;
         StartCoroutine(delayInvul(5f)); // 3 second protected
         delayedShield = true;
         // play some exploding particles TODO
+		AudioSource.PlayClipAtPoint(playerDieSound, transform.position);
     }
 
     
