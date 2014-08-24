@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour {
     public bool sceneEnding = false;
     public bool gameOver = false;
 
+	public AudioClip newWorldAvailableSound;
+
     public long score = 0;
     public float multiplyer = 1.0f;
     public int lives = 5;
@@ -217,9 +219,11 @@ public class GameController : MonoBehaviour {
                 multiplyer += 0.5f;
                 level++;
                 threshold = 15000;
+				audio.PlayOneShot(newWorldAvailableSound);
             } else if (threshold == 15000) {
                 multiplyer += 0.5f;
                 level++;
+				audio.PlayOneShot(newWorldAvailableSound);
                 threshold = 999999999999;
             } 
         }
