@@ -40,10 +40,12 @@ public class MenuButton : MonoBehaviour {
         if (mouseOver && !display) {
             switch (thisButton) {
                 case ButtonType.Play:
+                    audio.PlayOneShot(select);
                     Application.LoadLevel("Game");
                     break;
                 case ButtonType.Help:
                     //fly in
+                    audio.PlayOneShot(select);
                     flyout = false;
                     display = true;
                     textureWidth = 600f;
@@ -53,6 +55,7 @@ public class MenuButton : MonoBehaviour {
                     //fly in help
                     break;
                 case ButtonType.Credits:
+                    audio.PlayOneShot(select);
                     display = true;
                     flyout = false;
                     display = true;
