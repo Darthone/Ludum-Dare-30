@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour {
     public GameObject laserPrefab;
     public GameObject bombPrefab;
     public GameObject shieldPrefab;
-    
+    public GameObject explosionPrefab;
+
     public bool canShoot = true;
     public bool canMove = true;
     public bool canBeHurt = true;
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour {
             GameObject shield = (GameObject)Instantiate(shieldPrefab, this.transform.position , Quaternion.AngleAxis(0, Vector3.forward));
             shield.transform.parent = this.transform;
             delayedShield = true;
-            StartCoroutine(delayInvul(3f));
+            StartCoroutine(delayInvul(5f));
         }
 
         //fire
@@ -176,9 +177,10 @@ public class PlayerController : MonoBehaviour {
         this.transform.position = Vector3.zero;
         this.rigidbody2D.velocity = Vector2.zero;
         GameObject shield = (GameObject)Instantiate(shieldPrefab, this.transform.position, Quaternion.AngleAxis(0, Vector3.forward));
+        GameObject explosion = (GameObject)Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
         shield.transform.parent = this.transform;
         canBeHurt = false;
-        StartCoroutine(delayInvul(3f)); // 3 second protected
+        StartCoroutine(delayInvul(5f)); // 3 second protected
         delayedShield = true;
         // play some exploding particles TODO
     }
