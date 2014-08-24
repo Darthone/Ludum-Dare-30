@@ -97,6 +97,10 @@ public class GameController : MonoBehaviour {
         if (Input.GetButtonUp("Menu")) {
             canPause = true;
         }
+
+        if (Input.GetButtonDown("Mute")){
+            AudioListener.pause = !AudioListener.pause;
+        }
 	}
 
     void FixedUpdate() {
