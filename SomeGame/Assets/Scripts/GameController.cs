@@ -28,6 +28,9 @@ public class GameController : MonoBehaviour {
     public float multiplyer = 1.0f;
     public int lives = 5;
     public int level = 0;
+    long threshold = 5000;
+
+    public bool[] underAttack;
 
     public float minSpawnTime = 1f;
     public float maxSpawnTime = 3f;
@@ -75,6 +78,10 @@ public class GameController : MonoBehaviour {
         myGUIStyle.font = myGUIText.font;
         myGUIStyle.normal.textColor = Color.white;
         pc = player.GetComponent<PlayerController>();
+        underAttack = new bool[2];
+        for (int i = 0; i < underAttack.Length; i++) {
+            underAttack[i] = false;
+        }
     }
 	
 	// Update is called once per frame
@@ -93,6 +100,7 @@ public class GameController : MonoBehaviour {
 	}
 
     void FixedUpdate() {
+        CheckScore();
         playerLayer = player.layer;
 
         if (sceneStarting)
@@ -197,4 +205,19 @@ public class GameController : MonoBehaviour {
         // go to main menu
     }
 
+    void CheckScore() {
+        if (score >= threshold) {
+            if (threshold <= 15000) {
+                //TODO Alert player that he has to change worlds
+                //GUI.Label(new Rect(30, Screen.height - 30f - boxHeight + 1f, boxWidth + 10f, boxHeight), "x" + pc.bombs.ToString(), myGUIStyle);
+                multiplyer += 0.5f;
+                level++;
+                threshold = 15000;
+            } else if (threshold == 15000) {
+                multiplyer += 0.5f;
+                level++;
+                threshold = 999999999999;
+            } 
+        }
+    }
 }
