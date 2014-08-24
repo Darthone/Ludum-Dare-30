@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour {
     public bool canBeHurt = true;
     public AudioClip laserSound;
 	public AudioClip playerDieSound;
+	public AudioClip worldChangeSound;
+	public AudioClip worldChangeErrorSound;
 
     public float shootSpeed = 0.25f;
     public float maxSpeed = 1f;
@@ -124,15 +126,17 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("SwitchLeft")) { // place holder
             if (this.gameObject.layer > 8) {
                 this.gameObject.layer--;
-                //play sound
-            } else { }
+				audio.PlayOneShot(worldChangeSound);
+            } else { 
                 // play  sound
+				audio.PlayOneShot(worldChangeErrorSound);
+			}
         } else if (Input.GetButtonDown("SwitchRight")) {
             if (this.gameObject.layer < 8 + GameController.control.level) {
                 this.gameObject.layer++;
-                //play sound
+				audio.PlayOneShot(worldChangeSound);
             } else { 
-                // play sound
+				audio.PlayOneShot(worldChangeErrorSound);
             }
         }
 	}
