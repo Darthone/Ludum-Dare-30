@@ -50,6 +50,7 @@ public class MenuButton : MonoBehaviour {
                     display = true;
                     textureWidth = 600f;
                     textureHeight = 600f;
+					flyoffDest = new Vector2(150f, 550f);
                     messageRect = new Rect(0f, -600f, textureWidth, textureHeight);
                     destination = new Vector2(150f, 0f);
                     //fly in help
@@ -63,7 +64,7 @@ public class MenuButton : MonoBehaviour {
                     textureHeight = 600f;
                     flyoffDest = new Vector2(150f, -600f);
                     messageRect = new Rect(150f, 1000f, textureWidth, textureHeight);
-                    destination = new Vector2(150f, -50f);
+                    destination = new Vector2(150f, 0f);
                     break;
             }
         }
