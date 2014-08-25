@@ -82,14 +82,14 @@ public class Enemy : MonoBehaviour {
 
         if (this.gameObject.layer == player.layer) {
             target = player;
-            if (player.layer != lastLayer) {
+            //if (player.layer != lastLayer) {
                 this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0f);
-            }
+            //}
         } else {
             target = core;
-            if (player.layer != lastLayer) {
+            //if (player.layer != lastLayer) {
                 this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 100f);
-            }
+            //}
         }
 
         lastLayer = player.layer;
