@@ -35,8 +35,8 @@ public class GameController : MonoBehaviour {
 
     public bool[] underAttack;
 
-    public float minSpawnTime = 1f;
-    public float maxSpawnTime = 3f;
+    public float minSpawnTime = 1.5f;
+    public float maxSpawnTime = 4f;
     public float powerupChance = .20f;
 
     IEnumerator IncreaseMultiplyer(float delay) {
@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour {
         multiplyer += 0.5f + 0.05f * delay;
         minSpawnTime = Mathf.Clamp(minSpawnTime -0.1f, 0.1f, 1f);
         maxSpawnTime = Mathf.Clamp(maxSpawnTime - 0.2f, 1.5f, 3f);
-        powerupChance = Mathf.Clamp(powerupChance + 0.01f, 0.20f, 0.33f);
+        //powerupChance = Mathf.Clamp(powerupChance + 0.01f, 0.20f, 0.33f);
         StartCoroutine(IncreaseMultiplyer(0.04f * delay * delay + 1f + delay));
     }
 
