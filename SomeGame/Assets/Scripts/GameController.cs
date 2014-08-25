@@ -237,7 +237,8 @@ public class GameController : MonoBehaviour {
     }
 
     void RestartGame() {
-        Application.LoadLevel("MainMenu");
+		Application.LoadLevel ("MainMenu");
+        //Application.LoadLevel("MainMenu_Mac");
         Destroy(this.gameObject);
     }
 
@@ -248,7 +249,7 @@ public class GameController : MonoBehaviour {
                 text.guiText.fontSize = 30;
                 text.GetComponent<floatingPoints>().scroll = 0f;
                 text.GetComponent<floatingPoints>().scroll = 4f;
-                text.guiText.text = "WARNING ATTACK FROM A NEW DIMENSION!";
+                text.guiText.text = "WARNING: ATTACK FROM A NEW DIMENSION!";
                 Invoke("textSwitchWorlds", 2f);
                 
                 multiplyer += 0.75f;
@@ -259,7 +260,7 @@ public class GameController : MonoBehaviour {
                 GameObject text = (GameObject)Instantiate(floatingText, this.transform.position + new Vector3(0,15f), Quaternion.identity);
                 text.guiText.fontSize = 30;
                 text.GetComponent<floatingPoints>().scroll = 4f;
-                text.guiText.text = "WARNING ATTACK FROM A NEW DIMENSION!";
+                text.guiText.text = "WARNING: ATTACK FROM A NEW DIMENSION!";
                 multiplyer += 1f;
                 level++;
 				audio.PlayOneShot(newWorldAvailableSound);
