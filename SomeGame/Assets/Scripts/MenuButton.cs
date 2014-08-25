@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class MenuButton : MonoBehaviour {
+    public GameObject Logo;
     public enum ButtonType { Play = 1, Help, Credits }
     public ButtonType thisButton;
     public AudioClip select;
@@ -11,6 +12,8 @@ public class MenuButton : MonoBehaviour {
     Material mat = null;
 
     Rect messageRect;
+    Vector3 logoDest = new Vector3(100f, 1.734491f);
+    Vector3 logoStart;
     Vector2 destination;
     Vector2 flyoffDest = new Vector2(150f, 500f);
     float textureWidth;
@@ -116,6 +119,7 @@ public class MenuButton : MonoBehaviour {
                 AudioListener.pause = false;
                 break;
         }
+        logoStart = Logo.transform.position;
 	}
 
     void OnGUI() {
@@ -130,6 +134,7 @@ public class MenuButton : MonoBehaviour {
             if (messageRect.position != destination) {
                 messageRect = new Rect(messageRect.position.x + (destination.x - messageRect.position.x) * 0.1f,  messageRect.position.y + (destination.y - messageRect.position.y) * 0.1f, textureWidth, textureHeight);
             }
+            Logo.transform.position = Vector3.Lerp(Logo.transform.position, logoDest, Time.deltaTime);
         }
         if (flyout) {
             if (messageRect.position != flyoffDest) {
@@ -137,6 +142,7 @@ public class MenuButton : MonoBehaviour {
             } else {
                 flyout = false;
             }
+            Logo.transform.position = Vector3.Lerp(Logo.transform.position, logoStart, Time.deltaTime );
         }
 
         if (mouseOver) {
