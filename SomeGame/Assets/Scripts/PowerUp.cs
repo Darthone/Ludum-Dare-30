@@ -8,13 +8,27 @@ public class PowerUp : MonoBehaviour {
     public GameObject floatingText;
     public int points = 1000;
     public AudioClip sound;
+    GameObject player;
+    int lastLayer;
 
 	// Use this for initialization
 	void Start () {
 	    // choose a type TODO
         thisType = (PowerUpType)Mathf.Round(Random.Range(1, 5));
+        player = GameController.control.player;
 	}
-
+    void Update() {
+        if (this.gameObject.layer == player.layer) {
+            if (player.layer != lastLayer) {
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0f);
+            }
+        }
+        else {
+            if (player.layer != lastLayer) {
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 100f);
+            }
+        }
+    }
     void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")){
            // play audio

@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("SwitchLeft")) { // place holder
             if (this.gameObject.layer > 8) {
                 this.gameObject.layer--;
-                this.transform.position -= new Vector3(0f, 0f, 100f);
+                //this.transform.position -= new Vector3(0f, 0f, 100f);
 				audio.PlayOneShot(worldChangeSound);
             } else { 
                 // play  sound
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour {
             if (this.gameObject.layer < 8 + GameController.control.level) {
                 this.gameObject.layer++;
 				audio.PlayOneShot(worldChangeSound);
-                this.transform.position += new Vector3(0f, 0f, 100f);
+                //this.transform.position += new Vector3(0f, 0f, 100f);
             } else { 
 				audio.PlayOneShot(worldChangeErrorSound);
             }

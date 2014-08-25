@@ -245,12 +245,12 @@ public class GameController : MonoBehaviour {
             if (threshold < 15000) {
                 //TODO Alert player that he has to change worlds
                 //GUI.Label(new Rect(30, Screen.height - 30f - boxHeight + 1f, boxWidth + 10f, boxHeight), "x" + pc.bombs.ToString(), myGUIStyle);
-                multiplyer += 0.5f;
+                multiplyer += 0.75f;
                 level++;
                 threshold = 15000;
 				audio.PlayOneShot(newWorldAvailableSound);
             } else if (threshold == 15000) {
-                multiplyer += 0.5f;
+                multiplyer += 0.75f;
                 level++;
 				audio.PlayOneShot(newWorldAvailableSound);
                 threshold = 999999999999;

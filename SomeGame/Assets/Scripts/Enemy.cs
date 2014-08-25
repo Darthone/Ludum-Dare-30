@@ -32,6 +32,9 @@ public class Enemy : MonoBehaviour {
     public GameObject core;
     public GameObject target;
 
+    int lastLayer;
+    bool changedDepth = false;
+
     IEnumerator stateDelay(int nextState, float delay){
         if ((target.transform.position - this.transform.position).magnitude > 50f)
             nextState = 0;
@@ -54,10 +57,8 @@ public class Enemy : MonoBehaviour {
         if (enemyImages.Length > 0) {
             sr.sprite = enemyImages[(int)Mathf.Round(Random.Range(0, enemyImages.Length - 1))];
         }
-
-
-        //play some cool animaiton on start
 	    // randomize starting stats
+        lastLayer = player.layer;
 	}
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -79,10 +80,21 @@ public class Enemy : MonoBehaviour {
             Destroy(this.gameObject);
 			AudioSource.PlayClipAtPoint(enemyDieSound, transform.position);
         }
-        if (this.gameObject.layer == player.gameObject.layer)
+
+        if (this.gameObject.layer == player.layer) {
             target = player;
-        else
+            if (player.layer != lastLayer) {
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0f);
+            }
+        } else {
             target = core;
+            if (player.layer != lastLayer) {
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 100f);
+            }
+        }
+
+        lastLayer = player.layer;
+
 
         Vector3 diff = target.transform.position - transform.position;
         diff.Normalize();
