@@ -6,7 +6,9 @@ public class MenuButton : MonoBehaviour {
     public ButtonType thisButton;
     public AudioClip select;
     public Texture message;
-    public Material mat = null;
+    public bool toogleSound = false;
+    
+    Material mat = null;
 
     Rect messageRect;
     Vector2 destination;
@@ -21,6 +23,7 @@ public class MenuButton : MonoBehaviour {
     bool flyout;
     BoxCollider2D b;
     Vector2 bs;
+
     void OnMouseOver() {
         mouseOver = true;
         if (!sounded) {
@@ -69,17 +72,58 @@ public class MenuButton : MonoBehaviour {
             }
         }
     }
+
+    void Update() {
+        if (toogleSound && Input.GetButtonUp("Mute")) {
+            if (PlayerPrefs.HasKey("Muted")) {
+                switch (PlayerPrefs.GetInt("Muted")){
+                    case 0:
+                        AudioListener.pause = true;
+                        PlayerPrefs.SetInt("Muted", 1);
+                        break;
+                    case 1:
+                        AudioListener.pause = false;
+                        PlayerPrefs.SetInt("Muted", 0);
+                        break;
+                }
+                PlayerPrefs.Save();
+            } else {
+                AudioListener.pause = true;
+                PlayerPrefs.SetInt("Muted", 1);
+                PlayerPrefs.Save();
+            }
+        }
+        switch (PlayerPrefs.GetInt("Muted")) {
+            case 1:
+                AudioListener.pause = true;
+                break;
+            case 0:
+                AudioListener.pause = false;
+                break;
+        }
+    }
+
 	// Use this for initialization
 	void Start () {
         b = this.collider2D as BoxCollider2D;
         bs = b.size;
         start = this.transform.position;
+        switch (PlayerPrefs.GetInt("Muted")) {
+            case 1:
+                AudioListener.pause = true;
+                break;
+            case 0:
+                AudioListener.pause = false;
+                break;
+        }
 	}
+
     void OnGUI() {
         if (display || flyout && message !=null) {
             Graphics.DrawTexture(messageRect, message, mat);
         }
     }
+
 	// Update is called once per frame
 	void FixedUpdate () {
         if (display) {
