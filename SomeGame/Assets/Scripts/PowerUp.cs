@@ -17,18 +17,14 @@ public class PowerUp : MonoBehaviour {
         thisType = (PowerUpType)Mathf.Round(Random.Range(1, 5));
         player = GameController.control.player;
 	}
+
     void Update() {
-        if (this.gameObject.layer == player.layer) {
-            if (player.layer != lastLayer) {
-                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0f);
-            }
-        }
-        else {
-            if (player.layer != lastLayer) {
-                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 100f);
-            }
-        }
+        if (this.gameObject.layer == GameController.control.playerLayer)
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0f);
+        else
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 100f);
     }
+
     void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")){
            // play audio
