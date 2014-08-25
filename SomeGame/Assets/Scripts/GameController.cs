@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour {
     public float multiplyer = 1.0f;
     public int lives = 5;
     public int level = 0;
-    long threshold = 2500;
+    long threshold = 5000;
 
     public bool[] underAttack;
 
@@ -247,13 +247,13 @@ public class GameController : MonoBehaviour {
                 //GUI.Label(new Rect(30, Screen.height - 30f - boxHeight + 1f, boxWidth + 10f, boxHeight), "x" + pc.bombs.ToString(), myGUIStyle);
                 multiplyer += 0.75f;
                 level++;
-                threshold = 15000;
+                threshold = 30000;
 				audio.PlayOneShot(newWorldAvailableSound);
-            } else if (threshold == 15000) {
-                multiplyer += 0.75f;
+            } else if (threshold == 30000) {
+                multiplyer += 1f;
                 level++;
 				audio.PlayOneShot(newWorldAvailableSound);
-                threshold = 999999999999;
+                threshold = 9999999999999;
             } 
         }
     }
