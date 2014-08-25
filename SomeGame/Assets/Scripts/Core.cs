@@ -23,7 +23,7 @@ public class Core : MonoBehaviour {
 
     void OnGUI() {
         if (!GameController.control.gameOver) {
-            DrawQuad(new Rect(Screen.width / 2 - size.x / 2, Screen.height / 2 + 70, size.x, size.y), Color.Lerp(Color.red, Color.green, barDisplay));
+            DrawQuad(new Rect(Screen.width / 2 - size.x / 2, Screen.height / 2 + 55f, size.x, size.y), Color.Lerp(Color.red, Color.green, barDisplay));
         }
     }
 
