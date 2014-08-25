@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour {
     public float multiplyer = 1.0f;
     public int lives = 5;
     public int level = 0;
-    long threshold = 5000;
+    long threshold = 7500;
 
     public bool[] underAttack;
 
