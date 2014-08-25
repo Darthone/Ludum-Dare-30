@@ -56,7 +56,13 @@ public class Enemy : MonoBehaviour {
         if (enemyImages.Length > 0) {
             sr.sprite = enemyImages[(int)Mathf.Round(Random.Range(0, enemyImages.Length - 1))];
         }
+
 	    // randomize starting stats
+        moveSpeed = Random.Range(-1f,1f) * 0.2f + .6f;
+        shootSpeed = Random.Range(-1f, 1f) * 0.3f + 0.8f;
+        followDistance = Random.Range(-1f, 1f) * 15f + 40f;
+        laserSpeed = Random.Range(-1f, 1f) * 5f + 35f;
+
         lastLayer = player.layer;
 	}
 
