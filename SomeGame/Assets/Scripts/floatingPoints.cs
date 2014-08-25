@@ -5,8 +5,8 @@ public class floatingPoints : MonoBehaviour {
 
     public GUIText myGUItext;
     float alpha = 1f;
-    float scroll = 0.15f;
-    float duration = 1.5f;
+    public float scroll = 0.15f;
+    public float duration = 1.5f;
 
 	// Use this for initialization
 	void Start () {

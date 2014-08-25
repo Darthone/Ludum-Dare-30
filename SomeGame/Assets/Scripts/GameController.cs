@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
     public Texture2D[] guiLives;
     public Texture2D[] guiLevel;
     public Texture2D bombTex;
+    public GameObject floatingText;
 
     GUIText myGUIText;
     GUIStyle myGUIStyle;
@@ -243,18 +244,34 @@ public class GameController : MonoBehaviour {
     void CheckScore() {
         if (score >= threshold) {
             if (threshold < 15000) {
-                //TODO Alert player that he has to change worlds
-                //GUI.Label(new Rect(30, Screen.height - 30f - boxHeight + 1f, boxWidth + 10f, boxHeight), "x" + pc.bombs.ToString(), myGUIStyle);
+                GameObject text = (GameObject)Instantiate(floatingText, this.transform.position + new Vector3(0,10f), Quaternion.identity);
+                text.guiText.fontSize = 30;
+                text.GetComponent<floatingPoints>().scroll = 0f;
+                text.GetComponent<floatingPoints>().scroll = 4f;
+                text.guiText.text = "WARNING ATTACK FROM A NEW DIMENSION!";
+                Invoke("textSwitchWorlds", 2f);
+                
                 multiplyer += 0.75f;
                 level++;
                 threshold = 30000;
 				audio.PlayOneShot(newWorldAvailableSound);
             } else if (threshold == 30000) {
+                GameObject text = (GameObject)Instantiate(floatingText, this.transform.position + new Vector3(0,15f), Quaternion.identity);
+                text.guiText.fontSize = 30;
+                text.GetComponent<floatingPoints>().scroll = 4f;
+                text.guiText.text = "WARNING ATTACK FROM A NEW DIMENSION!";
                 multiplyer += 1f;
                 level++;
 				audio.PlayOneShot(newWorldAvailableSound);
                 threshold = 9999999999999;
             } 
         }
+    }
+
+    void textSwitchWorlds() {
+        GameObject text = (GameObject)Instantiate(floatingText, this.transform.position + new Vector3(0, 15f), Quaternion.identity);
+        text.guiText.fontSize = 30;
+        text.GetComponent<floatingPoints>().scroll = 4f;
+        text.guiText.text = "PRESS Q OR E TO SWITCH!";
     }
 }
