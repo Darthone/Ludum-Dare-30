@@ -33,7 +33,6 @@ public class Enemy : MonoBehaviour {
     public GameObject target;
 
     int lastLayer;
-    bool changedDepth = false;
 
     IEnumerator stateDelay(int nextState, float delay){
         if ((target.transform.position - this.transform.position).magnitude > 50f)
