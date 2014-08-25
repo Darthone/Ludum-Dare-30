@@ -52,7 +52,7 @@ public class MenuButton : MonoBehaviour {
                     textureHeight = 600f;
 					flyoffDest = new Vector2(150f, 550f);
                     messageRect = new Rect(0f, -600f, textureWidth, textureHeight);
-                    destination = new Vector2(150f, 0f);
+                    destination = new Vector2(100f, -75f);
                     //fly in help
                     break;
                 case ButtonType.Credits:
@@ -63,8 +63,8 @@ public class MenuButton : MonoBehaviour {
                     textureWidth = 600f;
                     textureHeight = 600f;
                     flyoffDest = new Vector2(150f, -600f);
-                    messageRect = new Rect(150f, 1000f, textureWidth, textureHeight);
-                    destination = new Vector2(150f, 0f);
+                    messageRect = new Rect(100f, 1000f, textureWidth, textureHeight);
+                    destination = new Vector2(100f, -50f);
                     break;
             }
         }
@@ -76,7 +76,7 @@ public class MenuButton : MonoBehaviour {
         start = this.transform.position;
 	}
     void OnGUI() {
-        if (display || flyout) {
+        if (display || flyout && message !=null) {
             Graphics.DrawTexture(messageRect, message, mat);
         }
     }
